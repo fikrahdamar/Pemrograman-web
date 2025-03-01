@@ -1,0 +1,115 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+body {
+    background-color: #e7dfcf;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 10%;
+    background: #f0ead6;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 100px 20px 50px;
+    flex: 1;
+}
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+}
+.hero img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: grey;
+}
+    .hero h1, .about h2, .skills h2, .contact h2 {
+    font-size: 2.5em;
+}
+.hero p, .about p {
+    font-size: 1.5em;
+}
+.hero button {
+    margin-top: 10px;
+    padding: 15px 30px;
+    background: #8b6a4f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: 0.3s;
+}
+.hero button:hover {
+    background: #6b4e3d;
+}
+.about {
+    margin-top: 100px;
+}
+.skills {
+    text-align: center;
+    margin: 100px 0;
+}
+.skills .icons {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+}
+.skills img {
+    width: 80px;
+    height: 80px;
+}
+.spacer {
+    height: 500px;
+}
+.contact {
+    background: #8b6a4f;
+    color: white;
+    text-align: left;
+    padding: 40px 10%;
+    margin-top: auto;
+}
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+    .hero {
+        flex-direction: column;
+        text-align: center;
+    }
+    .hero img {
+        margin-top: 20px;
+    }
+    .skills .icons {
+        flex-wrap: wrap;
+    }
+    .contact {
+        text-align: center;
+    }
+}
