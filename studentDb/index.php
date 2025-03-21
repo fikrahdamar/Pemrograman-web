@@ -7,7 +7,13 @@
 </head>
 <body>
     <h3>Halooo, Silahkan pilih data yang mau di cek atau ditambah</h3>
-    <?php include "layout/header.html"?>
+    <header>
+        <a href="index.php">Home</a>
+        <a href="data.php?tipe=mahasiswa">Data Mahasiswa</a>
+        <a href="data.php?tipe=dosen">Data Dosen</a>
+        <a href="data.php?tipe=">Data Kelas</a>
+        <a href="form.php">Tambah Data</a>
+    </header>
     <?php include "layout/footer.html"?>
 </body>
 </html>
