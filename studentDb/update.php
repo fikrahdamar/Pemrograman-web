@@ -35,13 +35,6 @@
     <title>Updata Data</title>
 </head>
 <body>
-<header>
-        <a href="index.php">Home</a>
-        <a href="data.php?tipe=mahasiswa">Data Mahasiswa</a>
-        <a href="data.php?tipe=dosen">Data Dosen</a>
-        <a href="data.php?tipe=kelas">Data Kelas</a>
-        <a href="form.php">Tambah Data</a>
-    </header>
     <h2>Update Data <?php echo ucfirst($tipe); ?></h2>
     <form action="proses_update.php" method="POST">
         <input type="hidden" name="tipe" value="<?php echo $tipe?>">
@@ -87,6 +80,9 @@
             <label for="id_matkul">ID Matkul : </label>
             <input type="text" id="id_matkul" name="id_matkul" value="<?php echo $row['id_matkul']?>" readonly><br>
         <?php } ?>
+        <input type="submit" value="Update">
     </form>
+    <br>
+    <a href="index.php">Kembali</a>
 </body>
 </html>
