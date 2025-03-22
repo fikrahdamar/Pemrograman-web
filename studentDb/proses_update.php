@@ -39,8 +39,7 @@
         }
 
         if(mysqli_query($db, $query)){
-            echo "Data berhasil diperbarui!";
-            echo "<br><a href='index.php'>Kembali</a>";
+            header("Location:data.php?tipe=$tipe&status=ok");
         } else {
             echo "ERROR : " . mysqli_error($db);
         }

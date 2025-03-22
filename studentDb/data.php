@@ -1,7 +1,7 @@
 <?php 
 include 'services/conn.php';
 
-$query = ""; // Inisialisasi variabel agar tidak undefined
+$query = ""; 
 $result = null;
 
 if (isset($_GET['tipe'])) {
@@ -13,18 +13,30 @@ if (isset($_GET['tipe'])) {
 echo "<h2>Data " . ucfirst($tipe) . "</h2>";
 
 if ($tipe == "mahasiswa") {
-    $query = "SELECT * FROM mhs";
-} elseif ($tipe == "dosen") {
-    $query = "SELECT * FROM dosen";
-} elseif ($tipe == "kelas") {
-    $query = "SELECT * FROM kelas";
+    $query = "SELECT mhs.*, jurusan.nama_jurusan FROM mhs 
+              LEFT JOIN jurusan ON mhs.id_jurusan = jurusan.id_jurusan";
+} else if($tipe == "dosen" && isset($_GET['id_dosen'])){
+    $id_dosen = $_GET['id_dosen'];
+    $query = "SELECT * FROM dosen WHERE id_dosen = '$id_dosen'";
+}else if ($tipe == "dosen") {
+    $query = "SELECT dosen.*, jurusan.nama_jurusan FROM dosen
+              LEFT JOIN jurusan ON dosen.id_jurusan = jurusan.id_jurusan";
+} else if ($tipe == "kelas") {
+    $query = "SELECT kelas.*, dosen.nama_dosen, mata_kuliah.nama_matkul 
+              FROM kelas
+              LEFT JOIN dosen ON kelas.id_dosen = dosen.id_dosen
+              LEFT JOIN mata_kuliah ON kelas.id_matkul = mata_kuliah.id_matkul";
+}else if ($tipe == "jurusan" && isset($_GET['id_jurusan'])) {
+    $id_jurusan = $_GET['id_jurusan'];
+    $query = "SELECT * FROM jurusan WHERE id_jurusan = '$id_jurusan'";
+}else if ($tipe == "mata_kuliah" && isset($_GET['id_matkul'])){
+    $id_matkul = $_GET['id_matkul'];
+    $query = "SELECT * FROM mata_kuliah WHERE id_matkul ='$id_matkul'";
 }
 
-// Cek apakah query tidak kosong sebelum dieksekusi
 if (!empty($query)) {
     $result = mysqli_query($db, $query);
 
-    // Cek jika query gagal
     if (!$result) {
         die("Query Error: " . mysqli_error($db));
     }
@@ -50,7 +62,6 @@ if (!empty($query)) {
     </header>
 
     <?php 
-    // Menampilkan pesan status setelah update atau delete
     if (isset($_GET['status'])) {
         $status = $_GET['status'];
         if ($status == 'ok') {
@@ -62,19 +73,27 @@ if (!empty($query)) {
     ?>
 
     <?php
-    if ($result && mysqli_num_rows($result) > 0) { // Cek apakah data ada
+    if ($result && mysqli_num_rows($result) > 0) { 
         echo "<table border='1'>";
         echo "<tr>";
         while ($dataInfo = mysqli_fetch_field($result)) {
             echo "<th>{$dataInfo->name}</th>";
         }
-        echo "<th>Aksi</th>"; // Kolom tambahan untuk update & delete
+        echo "<th>Fitur</th>"; 
         echo "</tr>";
 
         while ($rowInfo = mysqli_fetch_assoc($result)) {
             echo "<tr>";
-            foreach ($rowInfo as $dataRowInfo) {
-                echo "<td>{$dataRowInfo}</td>"; 
+            foreach ($rowInfo as $key => $dataRowInfo) {
+                if ($key == "id_jurusan") {
+                    echo "<td><a href='data.php?tipe=jurusan&id_jurusan={$dataRowInfo}'>{$dataRowInfo}</a></td>";
+                } else if($key == "id_dosen"){
+                    echo "<td><a href='data.php?tipe=dosen&id_dosen={$dataRowInfo}'>{$dataRowInfo}</a></td>";
+                }else if($key == 'id_matkul'){
+                    echo "<td><a href='data.php?tipe=mata_kuliah&id_matkul={$dataRowInfo}'>{$dataRowInfo}</a></td>";
+                }else {
+                    echo "<td>{$dataRowInfo}</td>";
+                }
             }
 
             echo "<td>"; 
@@ -119,11 +138,12 @@ if (!empty($query)) {
             echo "</tr>";
         }
         echo "</table>";
+
+        
+
     } else {
         echo "<p><strong>Data tidak ditemukan!</strong></p>";
     } 
-
-    // Pindahkan koneksi ditutup ke sini
     mysqli_close($db);
     ?>
 

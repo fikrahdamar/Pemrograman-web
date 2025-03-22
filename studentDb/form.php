@@ -32,6 +32,8 @@
             echo '<input type="hidden" name="tipe" value="' . $tipe . '">';
 
             if ($tipe == "mahasiswa") {
+            $query = "SELECT * FROM jurusan";
+            $result = mysqli_query($db, $query);
                 echo '<h4>Tambah Mahasiswa</h4>';
                 echo '<label>NRP</label>';
                 echo '<input type="text" name="nrp" class="form-control" required>';
@@ -44,26 +46,53 @@
                 echo '</select>';
                 echo '<label>Alamat</label>';
                 echo '<textarea name="alamat" class="form-control" required></textarea>';
-                echo '<label>ID Jurusan</label>';
-                echo '<input type="text" name="id_jurusan" class="form-control" required>';
+                echo ' <label for="id_jurusan">Pilih Jurusan:</label>';
+                echo "<select name='id_jurusan' required>";
+                echo '<option value="">-- Pilih Jurusan --</option>';
+                while ($row = $result->fetch_assoc()) {
+                    echo '<option value="' . $row['id_jurusan'] . '">' . $row['nama_jurusan'] . ' - ' . $row['id_jurusan'] . '</option>';
+                }
+                echo "</select>";
             } elseif ($tipe == "dosen") {
+            $query = "SELECT * FROM jurusan";
+            $result = mysqli_query($db, $query);
                 echo '<h4>Tambah Dosen</h4>';
                 echo '<label>ID Dosen</label>';
                 echo '<input type="text" name="id_dosen" class="form-control" required>';
                 echo '<label>Nama Dosen</label>';
                 echo '<input type="text" name="nama_dosen" class="form-control" required>';
-                echo '<label>ID Jurusan</label>';
-                echo '<input type="text" name="id_jurusan" class="form-control" required>';
+                echo ' <label for="id_jurusan">Pilih Jurusan:</label>';
+                echo "<select name='id_jurusan' required>";
+                echo '<option value="">-- Pilih Jurusan --</option>';
+                while ($row = $result->fetch_assoc()) {
+                    echo '<option value="' . $row['id_jurusan'] . '">' . $row['nama_jurusan'] . ' - ' . $row['id_jurusan'] . '</option>';
+                }
+                echo "</select>";
             } elseif ($tipe == "kelas") {
+            $queryMatkul = "SELECT id_matkul, nama_matkul FROM mata_kuliah";
+            $resultMatkul = mysqli_query($db, $queryMatkul);
+            
+            $queryDosen = "SELECT id_dosen, nama_dosen FROM dosen";
+            $resultDosen = mysqli_query($db, $queryDosen);
                 echo '<h4>Tambah Kelas</h4>';
                 echo '<label>ID Kelas</label>';
                 echo '<input type="text" name="id_kelas" class="form-control" required>';
                 echo '<label>Nama Kelas</label>';
                 echo '<input type="text" name="nama_kelas" class="form-control" required>';
-                echo '<label>ID Mata Kuliah</label>';
-                echo '<input type="text" name="id_matkul" class="form-control" required>';
-                echo '<label>ID Dosen</label>';
-                echo '<input type="text" name="id_dosen" class="form-control" required>';
+                echo '<label for="id_matkul">Mata Kuliah</label>';
+                echo '<select name="id_matkul" required';
+                echo '<option value="">-- Pilih mata kuliah --</option>';
+                while ($row = $resultMatkul->fetch_assoc()) {
+                    echo '<option value="' . $row['id_matkul'] . '">' . $row['nama_matkul'] . ' - ' . $row['id_matkul'] . '</option>';
+                }
+                echo "</select><br>";
+                echo '<label for="id_dosen">Dosen</label>';
+                echo '<select name="id_dosen" required>';
+                echo '<option value="">-- Pilih Dosen --</option>';
+                while ($row = $resultDosen->fetch_assoc()) {
+                    echo '<option value="' . $row['id_dosen'] . '">' . $row['nama_dosen'] . ' - ' . $row['id_dosen'] . '</option>';
+                }
+                echo "</select>";
             }
 
             echo '<br>';

@@ -33,11 +33,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (mysqli_query($db, $query)) {
-        // Redirect ke data.php setelah berhasil tambah data
         header("Location:data.php?tipe=$tipe&status=ok");
         exit();
     } else {
-        // Redirect ke data.php dengan status error
         header("Location:data.php?tipe=$tipe&status=err");
         exit();
     }
