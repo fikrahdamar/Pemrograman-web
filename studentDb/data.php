@@ -26,6 +26,7 @@ mysqli_close($db);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <title>Data</title>
 </head>
 <body>
@@ -50,9 +51,47 @@ mysqli_close($db);
                         echo "<td>{$dataRowInfo}</td>"; 
                         
                  }
-                    echo "<td><a href='update.php?nrp=" . $rowInfo['nrp'] . "'>Update</a></td>";
-                    echo "<td><a href='delete.php?nrp=" . $rowInfo['nrp'] . "'>Delete</a></td>";
+                    echo "<td>"; 
+                    if ($tipe == 'mahasiswa') {
+                        echo '<form action="update.php" method="POST" style="display:inline;">
+                                <input type="hidden" name="tipe" value="' . $tipe . '">
+                                <input type="hidden" name="nrp" value="' . $rowInfo['nrp'] . '">
+                                <input type="submit" value="Update">
+                              </form>';
+                    
+                        echo '<form action="proses_delete.php" method="POST" style="display:inline; margin-left:5px;">
+                                <input type="hidden" name="tipe" value="' . $tipe . '">
+                                <input type="hidden" name="nrp" value="' . $rowInfo['nrp'] . '">
+                                <input type="submit" value="Delete" onclick="return confirm(\'Apakah Anda yakin ingin menghapus data ini?\');">
+                              </form>';
+                    } elseif ($tipe == 'dosen') {
+                        echo '<form action="update.php" method="POST" style="display:inline;">
+                                <input type="hidden" name="tipe" value="' . $tipe . '">
+                                <input type="hidden" name="id_dosen" value="' . $rowInfo['id_dosen'] . '">
+                                <input type="submit" value="Update">
+                              </form>';
+                    
+                        echo '<form action="proses_delete.php" method="POST" style="display:inline; margin-left:5px;">
+                                <input type="hidden" name="tipe" value="' . $tipe . '">
+                                <input type="hidden" name="id_dosen" value="' . $rowInfo['id_dosen'] . '">
+                                <input type="submit" value="Delete" onclick="return confirm(\'Apakah Anda yakin ingin menghapus data ini?\');">
+                              </form>';
+                    } elseif ($tipe == 'kelas') {
+                        echo '<form action="update.php" method="POST" style="display:inline;">
+                                <input type="hidden" name="tipe" value="' . $tipe . '">
+                                <input type="hidden" name="id_kelas" value="' . $rowInfo['id_kelas'] . '">
+                                <input type="submit" value="Update">
+                              </form>';
+                    
+                        echo '<form action="proses_delete.php" method="POST" style="display:inline; margin-left:5px;">
+                                <input type="hidden" name="tipe" value="' . $tipe . '">
+                                <input type="hidden" name="id_kelas" value="' . $rowInfo['id_kelas'] . '">
+                                <input type="submit" value="Delete" onclick="return confirm(\'Apakah Anda yakin ingin menghapus data ini?\');">
+                              </form>';
+                    }
+                    echo "</td>";
                     echo "</tr>";
+                    
                 }
         echo "</table>";
     }else {
